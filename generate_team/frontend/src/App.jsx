@@ -1,13 +1,15 @@
 import './App.css';
-import PlayerInput from "./Components/PlayerInput/PlayerInput";
+import  HomePageContainers from './Containers/HomePageContainers';
+import { PrimeReactProvider } from 'primereact/api';
+
 
 function App() {
-
-    return (
-        <div id="App">
-		<PlayerInput />
-        </div>
-    )
+  return (
+    <PrimeReactProvider>
+      <HomePageContainers />		
+    </PrimeReactProvider>
+	
+  )
 };
 
 export default App;

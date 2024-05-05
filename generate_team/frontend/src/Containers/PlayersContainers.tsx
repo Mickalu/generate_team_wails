@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'primereact/button';
+import { Message } from 'primereact/message';
 import 'primeicons/primeicons.css';
 import { v4 as uuid } from 'uuid';
 
@@ -16,14 +17,19 @@ const PlayersContainers = () => {
   }
 
   const [playersList, setPlayersList] = useState<PlayerType[]>([])
+  const [displayError, setDisplayError] = useState<boolean>(false);
 
   const addPLayer = () => (
      setPlayersList([...playersList, initPlayer])
   );
 
   const generatTeams = () => {
-    console.log('coucou');
+    setDisplayError(false);
+    if (playersList.length % 2 !== 0) {
+      setDisplayError(true);
+    }
   };
+
 
   return (
     <> 
@@ -44,6 +50,7 @@ const PlayersContainers = () => {
         </div>
 
         <div style={{display: 'flex', flexDirection:'row-reverse', marginTop:'20px'}}> 
+          {displayError && <Message style={{marginLeft:'10px'}} severity='error' text='Il faut un nombre de joueurs paire.' />}
           <Button label='Générer' onClick={() => generatTeams() }/>
         </div>
       </div>

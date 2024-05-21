@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Button } from 'primereact/button';
+import { Message } from 'primereact/message';
 import 'primeicons/primeicons.css';
 import { v4 as uuid } from 'uuid';
 
 import { PlayerType } from '../types/PlayerType';
 import PlayerComponent from '../Components/PlayerComponent';
-
 
 
 const PlayersContainers = () => {
@@ -16,20 +16,24 @@ const PlayersContainers = () => {
   }
 
   const [playersList, setPlayersList] = useState<PlayerType[]>([])
+  const [displayError, setDisplayError] = useState<boolean>(false);
 
   const addPLayer = () => (
      setPlayersList([...playersList, initPlayer])
   );
 
   const generatTeams = () => {
-    console.log('coucou');
+    setDisplayError(false);
+    if (playersList.length % 2 !== 0) {
+      setDisplayError(true);
+    }
   };
 
+
   return (
-    <> 
-      <div style={{width:'50%'}}>
+      <div style={{width:'50%', marginLeft:'5px', marginRigth: '5px', marginTop: '5px'}}>
         <div style={{display: 'flex', flexDirection:'row-reverse', marginBottom:'20px'}}>
-          <Button label='Add' className='mb-3 md:mb-0' onClick={() => addPLayer()}/>
+          <Button label='Add' className='mb-3 md:mb-0' onClick={() => addPLayer()} style={{backgroundColor: 'var(--green-400)', borderColor:'var(--green-400)'}} />
         </div>
 
         <div style={{display: 'flex', flexDirection:'column', gap:'10px 0px', width:'100%'}}> 
@@ -44,10 +48,10 @@ const PlayersContainers = () => {
         </div>
 
         <div style={{display: 'flex', flexDirection:'row-reverse', marginTop:'20px'}}> 
+          {displayError && <Message style={{marginLeft:'10px'}} severity='error' text='Il faut un nombre de joueurs paire.' />}
           <Button label='Générer' onClick={() => generatTeams() }/>
         </div>
       </div>
-    </>
   )
 };
 

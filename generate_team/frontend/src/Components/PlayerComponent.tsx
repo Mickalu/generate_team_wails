@@ -1,9 +1,8 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { PlayerType } from '../types/PlayerType';
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import {FloatLabel} from 'primereact/FloatLabel';
-import { InputNumber} from 'primereact/InputNumber';
+import { TextField } from '@mui/material';
+import Input from '@mui/material';
+import Button from '@mui/material/Button';
 
 
 type PlayerComponentProps = {
@@ -13,6 +12,9 @@ type PlayerComponentProps = {
 };
 
 const PlayerComponent = ({id, setPlayersList, playersList}: PlayerComponentProps) => {
+  const NUMBER_REGEX_INPUT = /([0-9]*[.])?[0-9]+/;
+
+  const [levelValue, setLevelValue] = useState<string>('0');
 
   const deletePlayer = (idDelete: PlayerComponentProps['id']) => {
     const playersListCopy = [...playersList];
@@ -30,13 +32,37 @@ const PlayerComponent = ({id, setPlayersList, playersList}: PlayerComponentProps
     playersListCopy[index] = player;
 
     setPlayersList(playersListCopy);
-  }
+  };
+
+  const changeLevelUser = (level: string) => {
+    if (NUMBER_REGEX_INPUT.test(level)){
+      const playersListCopy = [...playersList];
+      const player = playersListCopy.find(player => player.id === id);
+
+      if (player) {
+        player.level = Number(level);
+        setPlayersList(playersListCopy);
+        setLevelValue(level);
+      }
+    }
+  };
 
   return (
     <div style={{display: 'flex', justifyContent: 'flex-start', gap:'5px' }}>
-      <InputText onChange={(e) => changeUsername(e.target.value) } placeholder='nom' style={{borderRadius:'5px', flexGrow:'4'}} />
-      <InputNumber placeholder='niveau' style={{borderRadius:'0px', flexGrow:'0'}} minFractionDigits={1} max={10} min={0} />
-      <Button label='delete' onClick={() => deletePlayer(id)} style={{backgroundColor:'var(--red-400)', borderBlock:'var(--red-400)'}} /> 
+      <TextField variant='standard' onChange={(e) => changeUsername(e.target.value) } placeholder='nom' style={{borderRadius:'5px', flexGrow:'4'}} />
+      <TextField
+          id="outlined-number"
+          placeholder='niveau'
+          type="number"
+          variant='standard'
+          value={levelValue}
+          inputProps={{min:0, max:10}}
+          onChange={(e) => changeLevelUser(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+      <Button color='error'  onClick={() => deletePlayer(id)}>Supprimer</Button> 
     </div>
   )
 };

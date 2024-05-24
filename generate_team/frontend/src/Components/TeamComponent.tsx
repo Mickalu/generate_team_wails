@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputText } from 'primereact/inputtext';
+import  TextField  from '@mui/material/TextField';
 import TeamType from '../types/TeamType';
 
 interface TeamComponentProps {
@@ -16,7 +16,7 @@ const TeamComponent = ({
     teams,
   }: TeamComponentProps) => (
     <div>
-      <InputText placeholder={value} value={value} onChange={(e) => changeTeamName(e.target.value, id, teams)}/>
+      <TextField variant="standard" placeholder={value}  value={value} onChange={(e) => changeTeamName(e.target.value, id, teams)}/>
     </div>
 );
 

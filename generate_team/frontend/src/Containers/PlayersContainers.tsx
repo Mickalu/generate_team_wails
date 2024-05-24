@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from 'primereact/button';
-import { Message } from 'primereact/message';
-import 'primeicons/primeicons.css';
+import Button from '@mui/material/Button';
+
 import { v4 as uuid } from 'uuid';
 
 import { PlayerType } from '../types/PlayerType';
 import PlayerComponent from '../Components/PlayerComponent';
+import { Alert, Box } from '@mui/material';
 
 
 const PlayersContainers = () => {
@@ -31,9 +31,12 @@ const PlayersContainers = () => {
 
 
   return (
-      <div style={{width:'50%', marginLeft:'5px', marginRigth: '5px', marginTop: '5px'}}>
+      <Box>
         <div style={{display: 'flex', flexDirection:'row-reverse', marginBottom:'20px'}}>
-          <Button label='Add' className='mb-3 md:mb-0' onClick={() => addPLayer()} style={{backgroundColor: 'var(--green-400)', borderColor:'var(--green-400)'}} />
+          <Button 
+            className='mb-3 md:mb-0'
+            onClick={() => addPLayer()} 
+          > Add </Button>
         </div>
 
         <div style={{display: 'flex', flexDirection:'column', gap:'10px 0px', width:'100%'}}> 
@@ -48,10 +51,10 @@ const PlayersContainers = () => {
         </div>
 
         <div style={{display: 'flex', flexDirection:'row-reverse', marginTop:'20px'}}> 
-          {displayError && <Message style={{marginLeft:'10px'}} severity='error' text='Il faut un nombre de joueurs paire.' />}
-          <Button label='Générer' onClick={() => generatTeams() }/>
+          {displayError && <Alert severity='error'> Il faut un nombre de joueurs paire. </Alert> }
+          <Button variant="contained" color="success" onClick={() => generatTeams() } >Générer</Button>
         </div>
-      </div>
+      </Box>
   )
 };
 

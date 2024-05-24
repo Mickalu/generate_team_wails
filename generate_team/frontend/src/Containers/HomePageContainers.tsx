@@ -1,14 +1,21 @@
 import React from 'react';
 import PlayersContainers from './PlayersContainers';
 import TeamsContainer from '../Containers/TeamsContainer';
+import { Box } from '@mui/material';
 
 
 const HomePageContainers = () => {
   return (
-    <div style={{display:'flex'}}> 
-      <PlayersContainers />
-      <TeamsContainer />
-    </div>
+    <Box display={'flex'} > 
+      <Box width={'50%'}> 
+        <PlayersContainers />
+      </Box>
+
+      <Box width={'50%'} >
+        <TeamsContainer />
+      </Box>
+
+    </Box>
   )
 };
 

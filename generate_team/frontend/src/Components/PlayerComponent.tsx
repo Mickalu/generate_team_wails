@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { PlayerType } from '../types/PlayerType';
 import { TextField } from '@mui/material';
-import Input from '@mui/material';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 
 type PlayerComponentProps = {
@@ -48,7 +48,7 @@ const PlayerComponent = ({id, setPlayersList, playersList}: PlayerComponentProps
   };
 
   return (
-    <div style={{display: 'flex', justifyContent: 'flex-start', gap:'5px' }}>
+    <Box width={'100%'} style={{display: 'flex', justifyContent: 'flex-start', gap:'5px' }}>
       <TextField variant='standard' onChange={(e) => changeUsername(e.target.value) } placeholder='nom' style={{borderRadius:'5px', flexGrow:'4'}} />
       <TextField
           id="outlined-number"
@@ -63,7 +63,7 @@ const PlayerComponent = ({id, setPlayersList, playersList}: PlayerComponentProps
           }}
         />
       <Button color='error'  onClick={() => deletePlayer(id)}>Supprimer</Button> 
-    </div>
+    </Box>
   )
 };
 

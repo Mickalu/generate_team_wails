@@ -31,15 +31,15 @@ const PlayersContainers = () => {
 
 
   return (
-      <Box>
-        <div style={{display: 'flex', flexDirection:'row-reverse', marginBottom:'20px'}}>
+      <Box width={'100%'}>
+        <Box width={'100%'} style={{display: 'flex', flexDirection:'row-reverse', marginBottom:'20px'}}>
           <Button 
             className='mb-3 md:mb-0'
             onClick={() => addPLayer()} 
           > Add </Button>
-        </div>
+        </Box>
 
-        <div style={{display: 'flex', flexDirection:'column', gap:'10px 0px', width:'100%'}}> 
+        <Box width={'100%'} style={{display: 'flex', flexDirection:'column', gap:'10px 0px'}}> 
           {playersList.map((player) => <PlayerComponent
               key={`player-${player.id}`} 
               id={player.id} 
@@ -48,12 +48,12 @@ const PlayersContainers = () => {
               />
             )
           }
-        </div>
+        </Box>
 
-        <div style={{display: 'flex', flexDirection:'row-reverse', marginTop:'20px'}}> 
+        <Box style={{display: 'flex', flexDirection:'row-reverse', marginTop:'20px'}}> 
           {displayError && <Alert severity='error'> Il faut un nombre de joueurs paire. </Alert> }
           <Button variant="contained" color="success" onClick={() => generatTeams() } >Générer</Button>
-        </div>
+        </Box>
       </Box>
   )
 };

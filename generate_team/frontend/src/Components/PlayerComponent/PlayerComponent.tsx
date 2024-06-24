@@ -1,7 +1,11 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { PlayerType } from '../types/PlayerType';
+import { PlayerType } from '../../types/PlayerType';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
+import CloseIcon from '@mui/icons-material/Close';
+
+
+import { PlayerComponentStyle, deleteButtonStyle, usernameInputStyle, levelInputStyle } from './styles';
 import Box from '@mui/material/Box';
 
 
@@ -11,7 +15,7 @@ type PlayerComponentProps = {
   playersList: PlayerType[];
 };
 
-const PlayerComponent = ({id, setPlayersList, playersList}: PlayerComponentProps) => {
+const PlayerComponent = ({ id, setPlayersList, playersList }: PlayerComponentProps) => {
   const NUMBER_REGEX_INPUT = /([0-9]*[.])?[0-9]+/;
 
   const [levelValue, setLevelValue] = useState<string>('0');
@@ -35,7 +39,7 @@ const PlayerComponent = ({id, setPlayersList, playersList}: PlayerComponentProps
   };
 
   const changeLevelUser = (level: string) => {
-    if (NUMBER_REGEX_INPUT.test(level)){
+    if (NUMBER_REGEX_INPUT.test(level)) {
       const playersListCopy = [...playersList];
       const player = playersListCopy.find(player => player.id === id);
 
@@ -48,21 +52,22 @@ const PlayerComponent = ({id, setPlayersList, playersList}: PlayerComponentProps
   };
 
   return (
-    <Box width={'100%'} style={{display: 'flex', justifyContent: 'flex-start', gap:'5px' }}>
-      <TextField variant='standard' onChange={(e) => changeUsername(e.target.value) } placeholder='nom' style={{borderRadius:'5px', flexGrow:'4'}} />
+    <Box sx={PlayerComponentStyle}>
+      <TextField variant='standard' onChange={(e) => changeUsername(e.target.value)} placeholder='nom' sx={usernameInputStyle} />
       <TextField
-          id="outlined-number"
-          placeholder='niveau'
-          type="number"
-          variant='standard'
-          value={levelValue}
-          inputProps={{min:0, max:10}}
-          onChange={(e) => changeLevelUser(e.target.value)}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      <Button color='error'  onClick={() => deletePlayer(id)}>Supprimer</Button> 
+        id="outlined-number"
+        placeholder='niveau'
+        type="number"
+        variant='standard'
+        value={levelValue}
+        inputProps={{ min: 0, max: 10 }}
+        onChange={(e) => changeLevelUser(e.target.value)}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        sx={levelInputStyle}
+      />
+      <Button variant='contained' sx={deleteButtonStyle} onClick={() => deletePlayer(id)}><CloseIcon /></Button>
     </Box>
   )
 };

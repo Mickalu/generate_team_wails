@@ -1,10 +1,12 @@
-import React, { useId, useState } from 'react';
-import TeamType from '../types/TeamType';
-import TeamComponent from '../Components/TeamComponent';
+import React, { useState } from 'react';
+import TeamType from '../../types/TeamType';
+import TeamComponent from '../../Components/TeamComponent/TeamComponent';
+import { teamContainerStyle } from './styles';
+import { Box } from '@mui/material';
 
 const initTeams: TeamType[] = [
-  {id:1, name: 'Sombre'},
-  {id:2, name: 'Clair'},
+  { id: 1, name: 'Sombre' },
+  { id: 2, name: 'Clair' },
 ];
 
 const TeamsContainer = () => {
@@ -15,16 +17,16 @@ const TeamsContainer = () => {
     const copyTeams = [...teams];
     const teamToUpdate = copyTeams.find(team => team.id == id);
 
-    if (teamToUpdate){
+    if (teamToUpdate) {
       teamToUpdate.name = value;
       setTeams(copyTeams);
     };
   };
-  
+
   return (
-    <div style={{display:'flex', flexDirection:'column', justifyContent:'flex-start'}}>
+    <Box sx={teamContainerStyle}>
       {teams.map((team: TeamType) => (<TeamComponent key={`team-${team.id}`} id={team.id} value={team.name} changeTeamName={changeTeamName} teams={teams} />))}
-    </div>
+    </Box>
   )
 };
 

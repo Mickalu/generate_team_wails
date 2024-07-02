@@ -7,10 +7,12 @@ export const generateButtonBoxStyle = {
 
 export const generateButtonStyle = {
   width: '40%',
+  maxWidth: '200px',
+  fontSize: '1.1rem',
+  fontWeight: '700',
   color: "#fffffe",
   backgroundColor: '#3da9fc',
   '&:hover': {
     backgroundColor: '#2d7fbe'
   }
-
 }

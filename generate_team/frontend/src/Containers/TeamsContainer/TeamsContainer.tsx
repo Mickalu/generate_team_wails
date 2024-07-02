@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TeamType from '../../types/TeamType';
 import TeamComponent from '../../Components/TeamComponent/TeamComponent';
 import { teamContainerStyle } from './styles';
 import { Box } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeTeamNameState } from '../../store/Slice/teamsSlice';
 
 const initTeams: TeamType[] = [
   { id: 1, name: 'Sombre' },
@@ -12,20 +14,20 @@ const initTeams: TeamType[] = [
 const TeamsContainer = () => {
   const [teams, setTeams] = useState<TeamType[]>(initTeams);
 
-  const changeTeamName = (value: TeamType['name'], id: TeamType['id'], teams: TeamType[]) => {
+  const teamsState = useAppSelector(state => state.teams.teams);
+  const dispatch = useAppDispatch();
 
-    const copyTeams = [...teams];
-    const teamToUpdate = copyTeams.find(team => team.id == id);
+  useEffect(() => {
+    setTeams(teamsState);
+  }, [teamsState]);
 
-    if (teamToUpdate) {
-      teamToUpdate.name = value;
-      setTeams(copyTeams);
-    };
+  const changeTeamName = (value: TeamType['name'], id: TeamType['id']) => {
+    dispatch(changeTeamNameState({ id: id, value: value }));
   };
 
   return (
     <Box sx={teamContainerStyle}>
-      {teams.map((team: TeamType) => (<TeamComponent key={`team-${team.id}`} id={team.id} value={team.name} changeTeamName={changeTeamName} teams={teams} />))}
+      {teams.map((team: TeamType) => (<TeamComponent key={`team-${team.id}`} id={team.id} value={team.name} changeTeamName={changeTeamName} />))}
     </Box>
   )
 };

@@ -25,3 +25,8 @@ func (a *App) startup(ctx context.Context) {
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
+
+func (a *App) generatorFunc(teams map[string]interface{}, players map[string]interface{}) (data map[string]interface{}) {
+        data = generateTeams(teams, players)
+        return 
+}

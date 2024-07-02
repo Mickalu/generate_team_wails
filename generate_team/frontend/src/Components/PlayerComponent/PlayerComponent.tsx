@@ -1,12 +1,19 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PlayerType } from '../../types/PlayerType';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { removePlayerState } from '../../store/Slice/playerSlice';
+
 
 import { PlayerComponentStyle, deleteButtonStyle, usernameInputStyle, levelInputStyle } from './styles';
 import Box from '@mui/material/Box';
+import {
+  changePlayerUsernameState,
+  changePlayerLevelUserState,
+} from '../../store/Slice/playerSlice';
+import { useAppDispatch } from '../../hooks';
 
 
 type PlayerComponentProps = {
@@ -18,24 +25,19 @@ type PlayerComponentProps = {
 const PlayerComponent = ({ id, setPlayersList, playersList }: PlayerComponentProps) => {
   const NUMBER_REGEX_INPUT = /([0-9]*[.])?[0-9]+/;
 
+  const dispatch = useAppDispatch();
   const [levelValue, setLevelValue] = useState<string>('0');
 
   const deletePlayer = (idDelete: PlayerComponentProps['id']) => {
-    const playersListCopy = [...playersList];
-    const listFiltered = playersListCopy.filter((player) => player.id !== idDelete);
-    setPlayersList(listFiltered);
+    dispatch(removePlayerState({ id: idDelete }));
   };
 
   const changeUsername = (value: PlayerType['username']) => {
     const playersListCopy = [...playersList];
     const index = playersListCopy.map(player => player.id).indexOf(id);
-
     const player = playersListCopy[index];
-    player['username'] = value;
 
-    playersListCopy[index] = player;
-
-    setPlayersList(playersListCopy);
+    dispatch(changePlayerUsernameState({ id: player.id, value: value }));
   };
 
   const changeLevelUser = (level: string) => {
@@ -44,12 +46,12 @@ const PlayerComponent = ({ id, setPlayersList, playersList }: PlayerComponentPro
       const player = playersListCopy.find(player => player.id === id);
 
       if (player) {
-        player.level = Number(level);
-        setPlayersList(playersListCopy);
         setLevelValue(level);
+        dispatch(changePlayerLevelUserState({ id: player.id, value: parseFloat(level) }));
       }
     }
   };
+
 
   return (
     <Box sx={PlayerComponentStyle}>

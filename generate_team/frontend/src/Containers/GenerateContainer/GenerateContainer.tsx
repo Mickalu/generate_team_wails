@@ -4,17 +4,41 @@ import Button from '@mui/material/Button';
 
 import { generateButtonBoxStyle, generateButtonStyle } from './style';
 import { PlayerType } from '../../types/PlayerType';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import TeamType from '../../types/TeamType';
+import { initGeneratorResult } from '../../store/Slice/generatorResultSlice';
+import { teamResultProps } from '../../store/Slice/generatorResultSlice';
+
+const fakeResult = (teams: TeamType[], players: PlayerType[]): teamResultProps[] => {
+  return [
+    {
+      team: teams[0],
+      players: players.splice(0, players.length / 2),
+    },
+    {
+      team: teams[1],
+      players: players.splice(players.length / 2, players.length),
+    }
+  ]
+}
 
 const GenerateContainer = () => {
-  const [displayError, setDisplayError] = useState<boolean>(false);
+  const players = useAppSelector(state => state.players.players);
+  const teams = useAppSelector(state => state.teams.teams);
 
-  const [playersList, setPlayersList] = useState<PlayerType[]>([])
+  const copyPlayers = [...players];
+  const copyTeams = [...teams];
+
+  const dispatch = useAppDispatch();
+  const [displayError, setDisplayError] = useState<boolean>(false);
 
   const generateTeams = () => {
     setDisplayError(false);
-    if (playersList.length % 2 !== 0) {
+    if (copyPlayers.length % 2 !== 0) {
       setDisplayError(true);
     }
+
+    dispatch(initGeneratorResult(fakeResult(copyTeams, copyPlayers)));
   };
   return (
     <Box sx={generateButtonBoxStyle}>

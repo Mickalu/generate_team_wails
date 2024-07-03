@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import TeamType from '../../types/TeamType';
 import { initGeneratorResult } from '../../store/Slice/generatorResultSlice';
 import { teamResultProps } from '../../store/Slice/generatorResultSlice';
+import {GeneratorFunc} from "../../../wailsjs/go/main/App";
 
 const fakeResult = (teams: TeamType[], players: PlayerType[]): teamResultProps[] => {
   return [
@@ -38,7 +39,11 @@ const GenerateContainer = () => {
       setDisplayError(true);
     }
 
-    dispatch(initGeneratorResult(fakeResult(copyTeams, copyPlayers)));
+    GeneratorFunc(copyTeams, copyPlayers).then(result => {
+      console.log(result)
+      dispatch(initGeneratorResult(result));
+    });
+
   };
   return (
     <Box sx={generateButtonBoxStyle}>

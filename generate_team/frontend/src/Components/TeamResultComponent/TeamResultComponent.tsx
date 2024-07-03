@@ -8,13 +8,14 @@ import { PlayerType } from '../../types/PlayerType';
 
 
 const TeamResultComponent = ({ teamResult }) => {
-  const sumLevels = teamResult.players.reduce(
+  console.log("teamResult : ", teamResult)
+  const sumLevels = teamResult.reduce(
     (n: number, player) => n + player.level, 0
   )
 
-  const meanTeam = sumLevels / teamResult.players.length;
+  const meanTeam = sumLevels / teamResult.length;
   const isLastItem = (index: number) => (
-    index + 1 === teamResult.players.length
+    index + 1 === teamResult.length
   )
 
   return (<Box sx={{ display: 'flex', flexDirection: 'column', width: '40%' }}>

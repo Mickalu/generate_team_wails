@@ -3,82 +3,35 @@ package main
 import (
 	"math/rand"
 	"sort"
-        "fmt"
+	"fmt"
 )
-
-func setData() (data map[string]interface{}) {
-	player1 := map[string]interface{}{
-		"id": 1,
-		"username": "player1",
-		"level": 2.75,
-	}
-
-	player2 := map[string]interface{}{
-		"id": 2,
-		"username": "player2",
-		"level": 5.00,
-	}
-
-	player3 := map[string]interface{}{
-		"id": 3,
-		"username": "player3",
-		"level": 3.89,
-	}
-
-	player4 := map[string]interface{}{
-		"id": 4,
-		"username": "player4",
-		"level": 1.3,
-	}
-
-	player5 := map[string]interface{}{
-		"id": 5,
-		"username": "player5",
-		"level": 5,
-	}
-
-	player6 := map[string]interface{}{
-		"id": 6,
-		"username": "player6",
-		"level": 0.2,
-	}
-
-	team1 := map[string]interface{}{"name": "team1"}
-
-	team2 := map[string]interface{}{"name": "team2"}
-	
-	data = map[string]interface{}{
-		"players": []map[string]interface{}{player1, player2, player3, player4, player5, player6},
-		"teams": []map[string]interface{}{team1, team2},
-	}
-	 return 
-}
 
 
 func generateTeams(
-        teams map[string]interface{},
-        players map[string]interface{},
-) (data map[string]interface{}) {
+        teams []map[string]interface{},
+        players []map[string]interface{},
+) (data []map[string]interface{}) {
 	indexTeam := 0
 
-	data = setData()
+	listPlayers := make([]map[string]interface{}, len(players))
+	copy(listPlayers, players)
 
-	listPlayers := make([]map[string]interface{}, len(data["players"].([]map[string]interface{})))
-	copy(listPlayers, data["players"].([]map[string]interface{}))
+	// init data with teams element result
 
-	listTeams := make([][]map[string]interface{}, 2, len(data["teams"].([]map[string]interface{})))
+	listTeams := make([][]map[string]interface{}, 2, len(teams))
 
 	numberRoundNumber := getNumberIfRandom(len(listPlayers))
 	
 	out:
-	for index, _ := range data["players"].([]map[string]interface{}) {
+	for index, _ := range players {
 		player := choosePlayer(
 			listPlayers, index, numberRoundNumber, listTeams, indexTeam,
 		)
+
 		listTeams[indexTeam] = append(listTeams[indexTeam], player)  
 
 		// delete player from copy list
-		listPlayers = deletePlayer(listPlayers, player["id"].(int))
+		listPlayers = deletePlayer(listPlayers, player["id"].(string))
 
 		
 		// break if no player left
@@ -87,24 +40,25 @@ func generateTeams(
 		}
 
 		// check if pass next team or return to first one
-		if indexTeam == len(data["teams"].([]map[string]interface{})) - 1 {
+		if indexTeam == len(teams) - 1 {
 			indexTeam = 0
 		} else {
 			indexTeam = indexTeam + 1 
 		}
 	}
+	data = listTeams
+	fmt.Println("data : ", data)
 
-	fmt.Println(listTeams)
-        return 
+    return 
 }
 
 
 func deletePlayer(
 	listPlayers []map[string]interface{},
-	id int,
+	id string,
 ) (newSlice []map[string]interface{}){
 	for _, player := range listPlayers {
-		if player["id"].(int) != id {
+		if player["id"].(string) != id {
 			newSlice = append(newSlice, player)	
 		}
 	}

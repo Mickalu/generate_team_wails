@@ -10,13 +10,23 @@ import (
 func generateTeams(
         teams []map[string]interface{},
         players []map[string]interface{},
-) (data []map[string]interface{}) {
+) ([]map[string]interface{}) {
+	data := []map[string]interface{}{
+        {
+            "team":    map[string]interface{}{},
+            "players": []map[string]interface{}{},
+        },
+        {
+            "team":    map[string]interface{}{},
+            "players": []map[string]interface{}{},
+        },
+
+	} 
+
 	indexTeam := 0
 
 	listPlayers := make([]map[string]interface{}, len(players))
 	copy(listPlayers, players)
-
-	// init data with teams element result
 
 	listTeams := make([][]map[string]interface{}, 2, len(teams))
 
@@ -46,10 +56,13 @@ func generateTeams(
 			indexTeam = indexTeam + 1 
 		}
 	}
-	data = listTeams
-	fmt.Println("data : ", data)
 
-    return 
+	for index, team := range teams {
+		data[index]["team"] = team
+		data[index]["players"] = listTeams[index]
+	}
+
+    return data 
 }
 
 
@@ -66,17 +79,17 @@ func deletePlayer(
 	return 
 }
 
-func sumTeamLevel(listPlayers []map[string]interface{}) (sum float32){
+func sumTeamLevel(listPlayers []map[string]interface{}) (sum float64){
 	for _, player := range listPlayers{
-		sum += float32(player["level"].(float32))
+		sum += float64(player["level"].(float64))
 	}
 	return
 }
 
-func getLevelTeams(listTeamsComposed [][]map[string]interface{}) (listLevelsTeam []float32) {
+func getLevelTeams(listTeamsComposed [][]map[string]interface{}) (listLevelsTeam []float64) {
 	for _, team := range listTeamsComposed{
 		sum := sumTeamLevel(team)
-		moyTeam := sum / float32(len(listTeamsComposed)) 	
+		moyTeam := sum / float64(len(listTeamsComposed)) 	
 		listLevelsTeam = append(listLevelsTeam, moyTeam)
 	}
 
@@ -87,13 +100,14 @@ func separateListPlayers(sortedList []map[string]interface{}) (separatedList [2]
 	median := len(sortedList)/2
 	separatedList[0] = sortedList[:median]
 	separatedList[1] = sortedList[median+1:]
+
 	return 
 }
 
 func sortPlayers(listPlayers []map[string]interface{}) (sortedList []map[string]interface{}){
 	sort.Slice(listPlayers,
 	func(i, j int) bool {
-		return listPlayers[i]["level"].(string) > listPlayers[i]["level"].(string)
+		return listPlayers[i]["level"].(float64) > listPlayers[j]["level"].(float64)
 	})
 
 	sortedList = listPlayers
@@ -101,10 +115,19 @@ func sortPlayers(listPlayers []map[string]interface{}) (sortedList []map[string]
 }
 
 func whichLevelOfPlayer(
-	teamLevels []float32,
+	teamLevels []float64,
 	indexTeam int,
+	separatedList [2][]map[string]interface{},
 ) int {
 	var otherTeamIndex int 
+
+	if len(separatedList[0]) == 0 {
+		return 1
+	}
+
+	if len(separatedList[1]) == 0 {
+		return 0
+	}
 
 	if indexTeam == 1 {
 		otherTeamIndex = 0	
@@ -129,7 +152,6 @@ func choosePlayer(
 	listTeams [][]map[string]interface{},
 	indexTeam int,
 )(player map[string]interface{}){
-
 	if index <= numberRoundNumber {
 		indexPlayer := rand.Intn(len(listPlayers))
 		player = listPlayers[indexPlayer]
@@ -141,7 +163,8 @@ func choosePlayer(
 			teamLevels := getLevelTeams(listTeams)	
 			sortedListPlayers := sortPlayers(listPlayers)
 			separatedListPlayers := separateListPlayers(sortedListPlayers)
-			listOfChoosenPlayers := separatedListPlayers[whichLevelOfPlayer(teamLevels, indexTeam)]
+			listOfChoosenPlayers := separatedListPlayers[whichLevelOfPlayer(teamLevels, indexTeam, separatedListPlayers)]
+			fmt.Println("listOfChoosenPlayers : ", listOfChoosenPlayers)
 			player = listOfChoosenPlayers[rand.Intn(len(listOfChoosenPlayers))]
 		}
 	}

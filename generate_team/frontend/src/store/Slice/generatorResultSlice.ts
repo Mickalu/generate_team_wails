@@ -21,7 +21,6 @@ const generatorResultSlice = createSlice({
   reducers: {
     resetGeneratorResult: () => initialState,
     initGeneratorResult: (state, action: PayloadAction<teamResultProps[]>) => {
-      console.log("action : ", action);
       state.result = action.payload;
     },
   }

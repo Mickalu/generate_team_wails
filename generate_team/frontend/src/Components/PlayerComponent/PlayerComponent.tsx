@@ -23,7 +23,7 @@ type PlayerComponentProps = {
 };
 
 const PlayerComponent = ({ id, setPlayersList, playersList }: PlayerComponentProps) => {
-  const NUMBER_REGEX_INPUT = /([0-9]*[.])?[0-9]+/;
+  const NUMBER_REGEX_INPUT = /^(10(\.00?)?|([0-9](\.\d{1,2})?)?)$|^$/;
 
   const dispatch = useAppDispatch();
   const [levelValue, setLevelValue] = useState<string>('0');
@@ -51,7 +51,6 @@ const PlayerComponent = ({ id, setPlayersList, playersList }: PlayerComponentPro
       }
     }
   };
-
 
   return (
     <Box sx={PlayerComponentStyle}>

@@ -38,13 +38,14 @@ const GenerateContainer = () => {
     if (copyPlayers.length % 2 !== 0) {
       setDisplayError(true);
     }
-
-    GeneratorFunc(copyTeams, copyPlayers).then(result => {
-      console.log(result)
-      dispatch(initGeneratorResult(result));
-    });
-
+    else {
+      GeneratorFunc(copyTeams, copyPlayers).then(result => {
+        console.log(result)
+        dispatch(initGeneratorResult(result));
+      });
+    }
   };
+
   return (
     <Box sx={generateButtonBoxStyle}>
       {displayError && <Alert severity='error'> Il faut un nombre de joueurs paire. </Alert>}

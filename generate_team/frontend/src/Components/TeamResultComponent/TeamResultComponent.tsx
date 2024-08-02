@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 
-import { teamResultProps } from '../../store/Slice/generatorResultSlice';
 import { teamCellStyle } from './style';
 import PlayerCell from './PlayerCell';
 import { PlayerType } from '../../types/PlayerType';
 
 
-const TeamResultComponent = ({ teamResult }) => {
-  console.log("teamResult : ", teamResult)
+const TeamResultComponent = ({ resultGenerator, index}) => {
+  const teamResult = resultGenerator[index]
+
   const sumLevels = teamResult.players.reduce(
     (n: number, player) => n + player.level, 0
   )
@@ -18,12 +18,13 @@ const TeamResultComponent = ({ teamResult }) => {
     index + 1 === teamResult.players.length
   )
 
+
   return (<Box sx={{ display: 'flex', flexDirection: 'column', width: '40%' }}>
     <Box sx={teamCellStyle}>
       <span> {teamResult.team.name} </span>
       <span> Moyenne : {meanTeam} </span>
     </Box>
-    {teamResult.players.map((player: PlayerType, index: number) => <PlayerCell key={player.id} player={player} lastItem={isLastItem(index)} />)}
+    {teamResult.players.map((player: PlayerType, index: number) => <PlayerCell key={`${player.id}-${index}`} player={player} lastItem={isLastItem(index)} />)}
   </Box>
   )
 }

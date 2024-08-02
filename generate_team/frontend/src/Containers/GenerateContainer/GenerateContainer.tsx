@@ -40,6 +40,13 @@ const GenerateContainer = () => {
     }
     else {
       GeneratorFunc(copyTeams, copyPlayers).then(result => {
+
+        for (const team of result){
+          for (const player of team.players){
+            player.isActive = false;
+          }
+        }
+        
         console.log(result)
         dispatch(initGeneratorResult(result));
       });

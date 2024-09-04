@@ -1,14 +1,8 @@
 package main 
 
-type Player struct {
-	id int
-	username string
-	level float32
-}
+type Player  map[string] interface{}
 
-type Team struct {
-	name string
-}
+type Team map[string] interface{}
 
 type Data struct {
 	players []Player

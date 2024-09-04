@@ -30,3 +30,16 @@ func (a *App) GeneratorFunc(teams []map[string]interface{}, players []map[string
         data = generateTeams(teams, players)
         return 
 }
+
+func (a *App) ClipboardWriteImageFunc(base64Image string) (result bool) {
+	result = true
+
+	err := clipboardWriteImage(base64Image)
+	if err != nil {
+		fmt.Println(err)
+		result = false
+	}
+
+	return 
+}
+

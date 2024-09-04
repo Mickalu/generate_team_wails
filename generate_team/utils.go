@@ -3,22 +3,27 @@ package main
 import (
 	"math/rand"
 	"sort"
-	"fmt"
+	"fmt"	
+	"github.com/atotto/clipboard" // Clipboard library
+	"log"
+	"encoding/base64"
+	"image"
+	"image/png"
+	"bytes"
 )
 
-
 func generateTeams(
-        teams []map[string]interface{},
-        players []map[string]interface{},
+        teams []Team,
+        players []Player,
 ) ([]map[string]interface{}) {
 	data := []map[string]interface{}{
         {
-            "team":    map[string]interface{}{},
-            "players": []map[string]interface{}{},
+            "team":    Team{},
+            "players": []Player{},
         },
         {
-            "team":    map[string]interface{}{},
-            "players": []map[string]interface{}{},
+            "team":    Team{},
+            "players": []Player{},
         },
 
 	} 
@@ -184,4 +189,32 @@ func getNumberIfRandom(
 	}
 
 	return 
+}
+
+func clipboardWriteImage(base64Image string) error {
+	// Decode base64 to image
+	data, err := base64.StdEncoding.DecodeString(base64Image)
+	if err != nil {
+		return err
+	}
+
+	img, _, err := image.Decode(bytes.NewReader(data))
+	if err != nil {
+		return err
+	}
+
+	var buf bytes.Buffer
+	err = png.Encode(&buf, img)
+	if err != nil {
+		return err
+	}
+
+	// Copy to clipboard
+	err = clipboard.WriteAll(string(buf.Bytes()))
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+
+	return nil
 }

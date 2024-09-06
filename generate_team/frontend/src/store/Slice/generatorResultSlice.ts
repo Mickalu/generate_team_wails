@@ -40,7 +40,6 @@ const generatorResultSlice = createSlice({
         
       } 
 
-      console.log("copy : ",  copy);
       state.result = copy;
     }
   }

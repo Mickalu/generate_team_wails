@@ -4,12 +4,8 @@ import (
 	"math/rand"
 	"sort"
 	"fmt"	
-	"github.com/atotto/clipboard" // Clipboard library
-	"log"
+	"golang.design/x/clipboard"
 	"encoding/base64"
-	"image"
-	"image/png"
-	"bytes"
 )
 
 func generateTeams(
@@ -192,40 +188,23 @@ func getNumberIfRandom(
 }
 
 func clipboardWriteImage(base64Image string) error {
-	// Decode base64 to image
 	data, err := base64.StdEncoding.DecodeString(base64Image)
 	if err != nil {
 		return err
 	}
 
-	img, _, err := image.Decode(bytes.NewReader(data))
+	err = clipboard.Init()
 	if err != nil {
-		return err
+		  panic(err)
 	}
 
-	var buf bytes.Buffer
-	err = png.Encode(&buf, img)
-	if err != nil {
-		return err
-	}
-
-	// Copy to clipboard
-	err = clipboard.WriteAll(string(buf.Bytes()))
-	if err != nil {
-		log.Fatal(err)
-		return err
-	}
+	clipboard.Write(clipboard.FmtImage, []byte(data))
 
 	return nil
 }
 
 func clibBoardWriteText(text string) error {
-	// Copy to clipboard
-	err := clipboard.WriteAll(string(text))
-	if err != nil {
-		log.Fatal(err)
-		return err
-	}
+	clipboard.Write(clipboard.FmtText, []byte(string(text)))
 
 	return nil
 	

@@ -9,6 +9,14 @@ export const syncAltIconStyle = {
   }
 }
 
+export const syncAltIconStyleWithoutBorder = {
+  borderRadius: '5px',
+  '&:hover': {
+    backgroundColor: '#91b6d1',
+    cursor: 'pointer',
+  }
+}
+
 export const boxTablesStyle = {
   display: 'flex',
   width: '100%',
@@ -19,7 +27,7 @@ export const boxTablesStyle = {
 export const boxCopyButtons = {
   display: 'flex',
   width: '100%',
-  justifyContent: 'flex-end',
+  justifyContent: 'space-between',
   alignItems: 'center',
   marginTop: '15px'
 }

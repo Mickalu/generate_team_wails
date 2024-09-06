@@ -8,9 +8,10 @@ export const playerComponentStyle = {
 
 export const addButtonBoxStyle = {
   display: 'flex',
-  flexDirection: 'row-reverse',
   marginBottom: '20px',
   width: '100%',
+  justifyContent: 'flex-end',
+  alignItems: 'flex-end',
 }
 
 export const playersBoxStyle = {
@@ -26,4 +27,8 @@ export const addButtonStyle = {
   '&:hover': {
     backgroundColor: '#2d7fbe'
   }
+}
+
+export const numberAddPlayerInputStyle = {
+  marginRight: '5px'
 }

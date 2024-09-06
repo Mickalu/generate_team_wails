@@ -26,8 +26,8 @@ export const playersSlice = createSlice({
   initialState,
   reducers: {
     resetPlayersState: resetPlayerStateFunc,
-    addPlayerState: (state, action: PayloadAction<PlayerType>) => {
-      state.players = [...state.players, action.payload]
+    addPlayerState: (state, action: PayloadAction<PlayerType[]>) => {
+      state.players = [...state.players].concat(action.payload)
     },
     removePlayerState: (state, action: PayloadAction<{ id: string }>) => {
       const playersListCopy = [...state.players];

@@ -26,7 +26,7 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
-func (a *App) GeneratorFunc(teams []map[string]interface{}, players []map[string]interface{}) (data []map[string]interface{}) {
+func (a *App) GeneratorFunc(teams []Team, players []Player) (data []map[string]interface{}) {
         data = generateTeams(teams, players)
         return 
 }

@@ -22,7 +22,7 @@ const TeamResultComponent = ({ resultGenerator, index}) => {
   return (<Box sx={{ display: 'flex', flexDirection: 'column', width: '40%' }}>
     <Box sx={teamCellStyle}>
       <span> {teamResult.team.name} </span>
-      <span> Moyenne : {meanTeam} </span>
+      <span> Moyenne : {meanTeam.toFixed(2)} </span>
     </Box>
     {teamResult.players.map((player: PlayerType, index: number) => <PlayerCell key={`${player.id}-${index}`} player={player} lastItem={isLastItem(index)} />)}
   </Box>

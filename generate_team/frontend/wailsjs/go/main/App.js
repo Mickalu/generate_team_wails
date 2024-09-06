@@ -6,6 +6,10 @@ export function ClipboardWriteImageFunc(arg1) {
   return window['go']['main']['App']['ClipboardWriteImageFunc'](arg1);
 }
 
+export function ClipboardWriteTextFunc(arg1) {
+  return window['go']['main']['App']['ClipboardWriteTextFunc'](arg1);
+}
+
 export function GeneratorFunc(arg1, arg2) {
   return window['go']['main']['App']['GeneratorFunc'](arg1, arg2);
 }

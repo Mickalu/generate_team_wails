@@ -43,3 +43,15 @@ func (a *App) ClipboardWriteImageFunc(base64Image string) (result bool) {
 	return 
 }
 
+func (a *App) ClipboardWriteTextFunc(text string) (result bool) {
+	result = true
+
+	err := clibBoardWriteText(text)
+	if err != nil {
+		fmt.Println(err)
+		result = false
+	}
+
+	return 
+}
+

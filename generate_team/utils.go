@@ -218,3 +218,15 @@ func clipboardWriteImage(base64Image string) error {
 
 	return nil
 }
+
+func clibBoardWriteText(text string) error {
+	// Copy to clipboard
+	err := clipboard.WriteAll(string(text))
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+
+	return nil
+	
+}

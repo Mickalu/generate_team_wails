@@ -4,6 +4,8 @@ import {main} from '../models';
 
 export function ClipboardWriteImageFunc(arg1:string):Promise<boolean>;
 
+export function ClipboardWriteTextFunc(arg1:string):Promise<boolean>;
+
 export function GeneratorFunc(arg1:Array<main.Team>,arg2:Array<main.Player>):Promise<Array<{[key: string]: any}>>;
 
 export function Greet(arg1:string):Promise<string>;

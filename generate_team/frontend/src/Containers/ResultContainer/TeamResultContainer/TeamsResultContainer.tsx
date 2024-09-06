@@ -8,7 +8,7 @@ import { boxTablesStyle, syncAltIconStyle, boxCopyButtons } from './style';
 import { useDispatch } from 'react-redux';
 import { initGeneratorResult } from '../../../store/Slice/generatorResultSlice';
 import html2canvas from 'html2canvas';
-import { ClipboardWriteImageFunc } from '../../../../wailsjs/go/main/App';
+import { ClipboardWriteImageFunc, ClipboardWriteTextFunc } from '../../../../wailsjs/go/main/App';
 
 const TeamsResultContainer = () => {
   const resultGenerator = useAppSelector(state => state.generatorResult.result);
@@ -47,34 +47,34 @@ const TeamsResultContainer = () => {
 
     dispatch(initGeneratorResult(copy));
   }
-    const arrayBufferToBase64 = (buffer) => {
-    let binary = '';
-    const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
+
+
+  const copyResultToClickBoard = () => {
+      var textResult = "";
+
+      result.map((teamResult) => {
+        var playersText = "";
+        var teamText = "";
+
+        const sumLevels = teamResult.players.reduce(
+          (n: number, player) => n + player.level, 0
+        );
+
+        const meanTeam = sumLevels / teamResult.players.length;
+        teamText = `team: ${teamResult.team.name} score: ${meanTeam.toFixed(2)} \n`;
+
+        teamResult.players.map((player) => {
+          const textPlayer = `nom: ${player.username} score: ${player.level} \n`;
+          playersText += textPlayer;
+        })
+
+        textResult += `${teamText}\n${playersText}\n\n`;
+      });
+
+
+      ClipboardWriteTextFunc(textResult);
   };
 
-  const copyResultToClickBoard = async () => {
-    if (!refResult.current) return;
-
-    const canvas = await html2canvas(refResult.current);
-    console.log(canvas.toDataURL('image/png'))
-
-
-    canvas.toBlob(async (blob) => {
-      if (blob) {
-        const arrayBuffer = await blob.arrayBuffer();
-        const base64data = arrayBufferToBase64(arrayBuffer);
-        ClipboardWriteImageFunc(base64data);
-      } else {
-        console.error('Failed to convert canvas to blob.');
-      }
-    });
-
-  };
 
 
   return (

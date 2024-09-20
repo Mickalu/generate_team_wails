@@ -1,3 +1,6 @@
+import { display } from "html2canvas/dist/types/css/property-descriptors/display"
+import { color } from "html2canvas/dist/types/css/types/color"
+
 export const playerComponentStyle = {
   display: 'flex',
   justifyContent: 'center',
@@ -31,4 +34,19 @@ export const addButtonStyle = {
 
 export const numberAddPlayerInputStyle = {
   marginRight: '5px'
+}
+
+export const numberPlayerTextStyle = {
+  color: "#2b2c34",
+  display: 'flex',
+  marginBottom: '20px',
+  width: '100%',
+  justifyContent: 'flex-start',
+  alignItems: 'flex-end',
+}
+
+export const playerHeaderStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
 }

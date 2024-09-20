@@ -23,7 +23,7 @@ type PlayerComponentProps = {
 };
 
 const PlayerComponent = ({ id, setPlayersList, playersList }: PlayerComponentProps) => {
-  const NUMBER_REGEX_INPUT = /^(10(\.00?)?|([0-9](\.\d{1,2})?)?)$|^$/;
+  const NUMBER_REGEX_INPUT = /^(10(\.00?|\.?)?|[0-9](\.\d{1,2}|\.?)?)?$/;
 
   const dispatch = useAppDispatch();
   const [levelValue, setLevelValue] = useState<string>('0');
@@ -41,7 +41,8 @@ const PlayerComponent = ({ id, setPlayersList, playersList }: PlayerComponentPro
   };
 
   const changeLevelUser = (level: string) => {
-    if (NUMBER_REGEX_INPUT.test(level)) {
+
+    if (NUMBER_REGEX_INPUT.test(level) || level == "") {
       const playersListCopy = [...playersList];
       const player = playersListCopy.find(player => player.id === id);
 
@@ -50,6 +51,7 @@ const PlayerComponent = ({ id, setPlayersList, playersList }: PlayerComponentPro
         dispatch(changePlayerLevelUserState({ id: player.id, value: parseFloat(level) }));
       }
     }
+
   };
 
   return (
@@ -58,7 +60,7 @@ const PlayerComponent = ({ id, setPlayersList, playersList }: PlayerComponentPro
       <TextField
         id="outlined-number"
         placeholder='niveau'
-        type="number"
+        type="text"
         variant='standard'
         value={levelValue}
         inputProps={{ min: 0, max: 10 }}

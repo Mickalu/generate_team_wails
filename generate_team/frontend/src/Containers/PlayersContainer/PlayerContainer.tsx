@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid';
 
 import { PlayerType } from '../../types/PlayerType';
 import PlayerComponent from '../../Components/PlayerComponent/PlayerComponent';
-import { addPlayerState, removePlayerState } from '../../store/Slice/playerSlice';
+import { addPlayerState } from '../../store/Slice/playerSlice';
 
 import { playerComponentStyle, addButtonBoxStyle, playersBoxStyle, addButtonStyle, numberAddPlayerInputStyle } from './styles';
 import { useAppDispatch, useAppSelector } from '../../hooks';

@@ -30,7 +30,6 @@ const PlayersContainers = () => {
   }, [playersState])
 
   const addPLayer = () => {
-
     if (playersList.length + numberAddPlayers > 50) {
       setOpen(true);
       return 

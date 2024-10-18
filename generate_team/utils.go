@@ -3,7 +3,6 @@ package main
 import (
 	"math/rand"
 	"sort"
-	"fmt"	
 	"golang.design/x/clipboard"
 	"encoding/base64"
 )
@@ -87,10 +86,11 @@ func sumTeamLevel(listPlayers []Player) (sum float64){
 	return
 }
 
-func getLevelTeams(listTeamsComposed [][]Player) (listLevelsTeam []float64) {
-	for _, team := range listTeamsComposed{
+func getLevelTeams(listTeamsComposed *[][]Player) (listLevelsTeam []float64) {
+	data := *listTeamsComposed
+	for _, team := range data{
 		sum := sumTeamLevel(team)
-		moyTeam := sum / float64(len(listTeamsComposed)) 	
+		moyTeam := sum / float64(len(data)) 	
 		listLevelsTeam = append(listLevelsTeam, moyTeam)
 	}
 
@@ -100,7 +100,7 @@ func getLevelTeams(listTeamsComposed [][]Player) (listLevelsTeam []float64) {
 func separateListPlayers(sortedList []Player) (separatedList [2][]Player){
 	median := len(sortedList)/2
 	separatedList[0] = sortedList[:median]
-	separatedList[1] = sortedList[median+1:]
+	separatedList[1] = sortedList[median:]
 
 	return 
 }
@@ -137,14 +137,13 @@ func whichLevelOfPlayer(
 	}
 
 	if teamLevels[indexTeam] > teamLevels[otherTeamIndex]{
-		return 0 
+		return 1 
 	} else if teamLevels[indexTeam] < teamLevels[otherTeamIndex] {
-		return 1
+		return 0
 	} else {
 		return rand.Intn(2)
 	}
 }
-
 
 func choosePlayer(
 	listPlayers []Player,
@@ -161,11 +160,10 @@ func choosePlayer(
 		if len(listPlayers) == 1{
 			player = listPlayers[0]
 		} else {
-			teamLevels := getLevelTeams(listTeams)	
+			teamLevels := getLevelTeams(&listTeams)	
 			sortedListPlayers := sortPlayers(listPlayers)
 			separatedListPlayers := separateListPlayers(sortedListPlayers)
 			listOfChoosenPlayers := separatedListPlayers[whichLevelOfPlayer(teamLevels, indexTeam, separatedListPlayers)]
-			fmt.Println("listOfChoosenPlayers : ", listOfChoosenPlayers)
 			player = listOfChoosenPlayers[rand.Intn(len(listOfChoosenPlayers))]
 		}
 	}
@@ -207,5 +205,4 @@ func clibBoardWriteText(text string) error {
 	clipboard.Write(clipboard.FmtText, []byte(string(text)))
 
 	return nil
-	
 }

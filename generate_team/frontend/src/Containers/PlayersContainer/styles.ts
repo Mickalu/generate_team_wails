@@ -1,12 +1,10 @@
-import { display } from "html2canvas/dist/types/css/property-descriptors/display"
-import { color } from "html2canvas/dist/types/css/types/color"
-
 export const playerComponentStyle = {
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
   margin: '10px',
   width: '100%',
+  heigth: '100%',
 }
 
 export const addButtonBoxStyle = {
@@ -22,6 +20,8 @@ export const playersBoxStyle = {
   flexDirection: 'column',
   gap: '10px 0px',
   width: '100%',
+  overflow: 'scroll',
+  maxHeight: '100%',
 }
 
 export const addButtonStyle = {
@@ -49,4 +49,5 @@ export const playerHeaderStyle = {
   display: 'flex',
   justifyContent: 'space-between',
   width: '100%',
+  heigth: '100%',
 }

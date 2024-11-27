@@ -1,3 +1,5 @@
+import { display } from "html2canvas/dist/types/css/property-descriptors/display"
+
 export const PlayerComponentStyle = {
   display: 'flex',
   justifyContent: 'flex-start',
@@ -16,8 +18,12 @@ export const deleteButtonStyle = {
 
 export const levelInputStyle = {
   width: '20%',
+  display: "flex",
+  justifyContent: "end",
 }
 
 export const usernameInputStyle = {
   width: "80%",
+  display: "flex",
+  justifyContent: "end",
 }

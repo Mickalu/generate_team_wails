@@ -19,3 +19,7 @@ export const bodyBoxStyle = {
   display: 'flex',
   justifyContent: 'space-around',
 }
+
+export const playerAndGenStyle = {
+   backgroundColor: "white",
+}
